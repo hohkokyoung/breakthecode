@@ -1,0 +1,9 @@
+Django==5.1.1
+djangorestframework
+psycopg2-binary==2.9.6
+djangorestframework-simplejwt
+drf-yasg
+drf-yasg[validation]
+stegano
+pycryptodome
+bleach==6.1.0
