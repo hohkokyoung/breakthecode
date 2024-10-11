@@ -36,9 +36,9 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 LOCAL_APPS = [
-    'modules.core',
-    'modules.users',
-    'modules.challenges',
+    'core',
+    'users',
+    'challenges',
 ]
 
 # Application definition
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
+    'django_injector',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [

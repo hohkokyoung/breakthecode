@@ -1,4 +1,4 @@
-from rest_framework import generics, viewsets, status
+from rest_framework import generics, viewsets, status, mixins
 from django.contrib.auth.models import User, Group
 from .serializers import UserSerializer, GroupSerializer, GroupIdSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -8,18 +8,13 @@ from rest_framework.decorators import action
 from rest_framework.views import APIView
 from .enums import GroupName
 
-class UserViewSet(viewsets.ViewSet):
+class UserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     A simple ViewSet for listing or retrieving users.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
-
-    def retrieve(self, request, pk=None):
-        user = get_object_or_404(self.queryset, pk=pk)
-        serializer = self.serializer_class(user)
-        return Response(serializer.data)
     
 class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer

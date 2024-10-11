@@ -4,9 +4,9 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from drf_yasg.generators import OpenAPISchemaGenerator
 
-api_version = "v1"
+api_version = "v2"
 
-class SchemaGeneratorV1(OpenAPISchemaGenerator):
+class SchemaGeneratorV2(OpenAPISchemaGenerator):
     def get_endpoints(self, request):
         # Get all registered endpoints
         endpoints = super().get_endpoints(request)
@@ -24,12 +24,12 @@ schema_view = get_schema_view(
    openapi.Info(
       title="BreakTheCode System API",
       default_version=api_version,
-      description="Version 1 of the BreakTheCode System API.",
+      description="Version 2 of the BreakTheCode System API.",
       terms_of_service="",
       contact=openapi.Contact(email="kokyoung1520@gmail.com"),
       license=openapi.License(name="BSD License"),
    ),
-   generator_class=SchemaGeneratorV1,
+   generator_class=SchemaGeneratorV2,
    public=True,
    permission_classes=(permissions.AllowAny,),
 )

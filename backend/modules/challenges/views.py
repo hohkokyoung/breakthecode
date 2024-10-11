@@ -6,8 +6,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from api.globals.permissions import IsInGroup
 from modules.core.enums import GroupName
 from .serializers import ChallengeAnswerSerializer, ChallengeHintSerializer
-
-challenge_answer = "481139"
+from .services import ChallengeService
+from modules.challenges import challenge_answer
+from injector import inject
 
 # Create your views here.
 class ChallengeGuessView(APIView):
@@ -27,9 +28,11 @@ class ChallengeHintListView(APIView):
     def get(self, request):
 
         hints = [
-            {"sequence_no": 1, "hint": "This is the first hint."},
-            {"sequence_no": 2, "hint": "This is the second hint."},
-            {"sequence_no": 3, "hint": "This is the third hint."}
+            {"sequence_no": 1, "hint": "A user has this information."},
+            {"sequence_no": 2, "hint": "Maybe we can reuse the same user for further exploit."},
+            {"sequence_no": 3, "hint": "What could be behind the image?"},
+            {"sequence_no": 4, "hint": "Hidden behind third code."},
+            {"sequence_no": 5, "hint": "First two digits of the developer's CGPA."},
         ]
 
         serializer = ChallengeHintSerializer(hints, many=True)
@@ -38,8 +41,11 @@ class ChallengeHintListView(APIView):
 class ChallengeCodeDetailView(APIView):
     permission_classes = [IsAuthenticated, IsInGroup(GroupName.PREMIUM.value)]
 
+    @inject
+    def __init__(self, challenge_service: ChallengeService, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.challenge_service = challenge_service
+
     def get(self, request, code_id, *args, **kwargs):
-        if (code_id == 2):
-            return Response({"code": challenge_answer[code_id - 1]})
-        
-        return Response({"detail": "Not found."})
+        code = self.challenge_service.get_challenge_code(code_id)
+        return Response(code)
