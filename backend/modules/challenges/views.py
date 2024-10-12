@@ -19,8 +19,10 @@ class ChallengeGuessView(APIView):
         if serializer.is_valid():
             # If the data is valid, you can process it
             validated_data = serializer.validated_data
-            if (validated_data != challenge_answer):
+            if (validated_data["code"] != challenge_answer):
                 return Response({"success": False, "message": "Please try again."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"success": True, "message": "Well Done!"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
