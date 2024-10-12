@@ -9,4 +9,4 @@ Rules:
 2. One can bypass the throttling of the guessing attempt by simply rotating the IP address, so for your own challenge, just skip that method.
 3. Have fun :)
 
-Do reach out to me for any improvements that can added into the system, as well as other ways you have broken into the system without using the hints, email me at kokyoung1520@gmail.com.
+Do reach out to me for any improvements that can be added into the system, as well as other ways you have broken into the system without using the hints, email me at kokyoung1520@gmail.com.
