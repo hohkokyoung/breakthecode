@@ -20,7 +20,7 @@ class ChallengeGuessView(APIView):
             # If the data is valid, you can process it
             validated_data = serializer.validated_data
             if (validated_data["code"] != challenge_answer):
-                return Response({"success": False, "message": "Please try again."}, status=status.HTTP_200_OK)
+                return Response({"success": False, "message": "Please try again."}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response({"success": True, "message": "Well Done!"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -50,4 +50,6 @@ class ChallengeCodeDetailView(APIView):
 
     def get(self, request, code_id, *args, **kwargs):
         code = self.challenge_service.get_challenge_code(code_id)
-        return Response(code)
+        if code:
+            return Response(code, status=status.HTTP_200_OK)
+        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
